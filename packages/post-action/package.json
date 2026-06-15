@@ -1,0 +1,40 @@
+{
+  "name": "@fmcoldays/post-action",
+  "version": "0.2.0",
+  "description": "Ejecuta peticiones HTTP declarativas al hacer click en elementos con data-action-url (confirmación, loading, targets, notificaciones, descarga, redirección).",
+  "author": "fmcoldays",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": true,
+  "keywords": ["data-attributes", "ajax", "fetch", "toast", "dom", "behavior"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@fmcoldays/shared": "workspace:^",
+    "@fmcoldays/toast": "workspace:^"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3"
+  }
+}

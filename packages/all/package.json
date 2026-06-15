@@ -1,0 +1,49 @@
+{
+  "name": "@fmcoldays/all",
+  "version": "0.1.0",
+  "description": "Meta-paquete: instala y registra todos los paquetes @fmcoldays de una vez.",
+  "author": "fmcoldays",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": true,
+  "keywords": ["fmcoldays", "all", "bundle"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles": {
+      "types": "./styles.d.ts",
+      "default": "./all.css"
+    }
+  },
+  "files": [
+    "dist",
+    "all.css",
+    "styles.d.ts"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@fmcoldays/post-action": "workspace:^",
+    "@fmcoldays/modal": "workspace:^",
+    "@fmcoldays/dropzone": "workspace:^",
+    "@fmcoldays/toast": "workspace:^",
+    "@fmcoldays/shared": "workspace:^"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3"
+  }
+}

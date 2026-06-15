@@ -1,0 +1,46 @@
+{
+  "name": "@fmcoldays/modal",
+  "version": "0.6.1",
+  "description": "Modal autocontenido: carga vistas parciales Razor en un <dialog> vía fetch, con shell auto-inyectado, drag, tamaños, header/footer slots, multi-paso y validación unobtrusive.",
+  "author": "fmcoldays",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": true,
+  "keywords": ["modal", "dialog", "fetch", "razor", "aspnet"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles": {
+      "types": "./styles.d.ts",
+      "default": "./modal.css"
+    },
+    "./modal.css": "./modal.css"
+  },
+  "files": [
+    "dist",
+    "modal.css",
+    "styles.d.ts"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@fmcoldays/shared": "workspace:^"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,23 @@
+/** Opciones resueltas desde los atributos `data-action-*` de un trigger. */
+export interface ActionOptions {
+  url: string
+  method: string
+  silent: boolean
+  reloadOnSuccess: boolean
+  redirect?: string
+  successMsg: string
+  errorMsg: string
+  confirm: boolean
+  confirmTitle: string
+  confirmMsg: string
+  bodyJson?: string
+  bodyForm?: string
+  pick?: Record<string, string>
+  disable: boolean
+  loadingClass?: string
+  targetSel?: string
+  targetProp: 'html' | 'text' | 'value'
+  thenSel?: string
+  csrf: boolean
+  download: boolean
+}
