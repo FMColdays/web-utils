@@ -1,12 +1,12 @@
 {
   "name": "@fmcoldays/toast",
-  "version": "0.1.0",
-  "description": "Notificaciones (toasts) animadas con SVG morphing y diálogo de confirmación. Sin dependencias externas, inyecta sus propios estilos.",
+  "version": "0.1.4",
+  "description": "Toasts animados, confirm y notify. Sin dependencias externas, inyecta sus propios estilos.",
   "author": "fmcoldays",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
-  "keywords": ["toast", "notification", "confirm", "dialog", "svg", "dom"],
+  "keywords": ["toast", "notification", "confirm", "notify", "dialog", "svg", "dom"],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,9 +17,7 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

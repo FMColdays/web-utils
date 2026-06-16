@@ -5,3 +5,4 @@
 import '@fmcoldays/post-action'
 import '@fmcoldays/modal'
 import '@fmcoldays/dropzone'
+import '@fmcoldays/ajax-ext'

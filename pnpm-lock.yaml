@@ -18,8 +18,24 @@ importers:
         specifier: ^5.6.3
         version: 5.9.3
 
+  packages/ajax-ext:
+    dependencies:
+      '@fmcoldays/toast':
+        specifier: workspace:^
+        version: link:../toast
+    devDependencies:
+      tsup:
+        specifier: ^8.3.0
+        version: 8.5.1(typescript@5.9.3)
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+
   packages/all:
     dependencies:
+      '@fmcoldays/ajax-ext':
+        specifier: workspace:^
+        version: link:../ajax-ext
       '@fmcoldays/dropzone':
         specifier: workspace:^
         version: link:../dropzone

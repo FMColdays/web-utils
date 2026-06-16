@@ -17,6 +17,7 @@ const CONFIRM_CSS = `
     background: transparent;
     max-width: 100vw;
     max-height: 100dvh;
+    margin: auto;
     font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
   }
   ._confirm-dlg::backdrop {
@@ -69,12 +70,15 @@ const CONFIRM_CSS = `
     flex: 1;
     padding: 9px 14px;
     border-radius: 12px;
-    border: none;
+    border: none !important;
+    outline: none;
+    box-shadow: none;
     font-size: 13.5px; font-weight: 600;
     cursor: pointer;
     font-family: inherit;
     transition: filter 0.15s ease, background 0.15s ease;
   }
+  ._confirm-btn:focus { outline: none; box-shadow: none; }
   ._confirm-btn-cancel { background: #eef0f3; color: #374151; }
   ._confirm-btn-cancel:hover { background: #e3e6ea; }
   [data-theme='dark'] ._confirm-btn-cancel { background: #2a2c2f; color: #e5e7eb; }

@@ -1,12 +1,18 @@
 {
   "name": "@fmcoldays/modal",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Modal autocontenido: carga vistas parciales Razor en un <dialog> vía fetch, con shell auto-inyectado, drag, tamaños, header/footer slots, multi-paso y validación unobtrusive.",
   "author": "fmcoldays",
   "license": "MIT",
   "type": "module",
   "sideEffects": true,
-  "keywords": ["modal", "dialog", "fetch", "razor", "aspnet"],
+  "keywords": [
+    "modal",
+    "dialog",
+    "fetch",
+    "razor",
+    "aspnet"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

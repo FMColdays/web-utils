@@ -1,6 +1,6 @@
 {
   "name": "@fmcoldays/shared",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Utilidades compartidas (DOM, HTTP, CSRF, tipos) usadas por los paquetes de fmcoldays.",
   "author": "fmcoldays",
   "license": "MIT",

@@ -1,12 +1,19 @@
 {
   "name": "@fmcoldays/post-action",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Ejecuta peticiones HTTP declarativas al hacer click en elementos con data-action-url (confirmación, loading, targets, notificaciones, descarga, redirección).",
   "author": "fmcoldays",
   "license": "MIT",
   "type": "module",
   "sideEffects": true,
-  "keywords": ["data-attributes", "ajax", "fetch", "toast", "dom", "behavior"],
+  "keywords": [
+    "data-attributes",
+    "ajax",
+    "fetch",
+    "toast",
+    "dom",
+    "behavior"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

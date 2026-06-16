@@ -1,15 +1,19 @@
 {
-  "name": "@fmcoldays/all",
-  "version": "0.1.2",
-  "description": "Meta-paquete: instala y registra todos los paquetes @fmcoldays de una vez.",
+  "name": "@fmcoldays/ajax-ext",
+  "version": "0.2.0",
+  "description": "Extiende data-ajax de jQuery Unobtrusive Ajax con confirmacion async, loading states, toasts y navegacion declarativa via atributos data-ajax-ext-*.",
   "author": "fmcoldays",
   "license": "MIT",
   "type": "module",
   "sideEffects": true,
   "keywords": [
-    "fmcoldays",
-    "all",
-    "bundle"
+    "ajax",
+    "unobtrusive",
+    "aspnet",
+    "toast",
+    "confirm",
+    "loading",
+    "data-attributes"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -19,16 +23,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    },
-    "./styles": {
-      "types": "./styles.d.ts",
-      "default": "./all.css"
     }
   },
   "files": [
-    "dist",
-    "all.css",
-    "styles.d.ts"
+    "dist"
   ],
   "scripts": {
     "build": "tsup",
@@ -40,12 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@fmcoldays/post-action": "workspace:^",
-    "@fmcoldays/modal": "workspace:^",
-    "@fmcoldays/dropzone": "workspace:^",
-    "@fmcoldays/toast": "workspace:^",
-    "@fmcoldays/shared": "workspace:^",
-    "@fmcoldays/ajax-ext": "workspace:^"
+    "@fmcoldays/toast": "workspace:^"
   },
   "devDependencies": {
     "tsup": "^8.3.0",

@@ -1,12 +1,18 @@
 {
   "name": "@fmcoldays/dropzone",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Zona de carga de archivos con drag & drop, previsualización, lightbox de imágenes y subida inmediata. Auto-inicializa vía MutationObserver (sirve en modales y partiales AJAX).",
   "author": "fmcoldays",
   "license": "MIT",
   "type": "module",
   "sideEffects": true,
-  "keywords": ["dropzone", "file-upload", "drag-and-drop", "lightbox", "dom"],
+  "keywords": [
+    "dropzone",
+    "file-upload",
+    "drag-and-drop",
+    "lightbox",
+    "dom"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
