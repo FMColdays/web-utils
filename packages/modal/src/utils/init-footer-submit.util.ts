@@ -19,14 +19,11 @@ export const initFooterSubmit = (container: HTMLElement): void => {
     .querySelectorAll<HTMLButtonElement>('button:not([type="button"]):not([type="reset"])')
     .forEach((btn) => {
       btn.addEventListener('click', (e) => {
+        e.preventDefault()
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const jq = (window as any).jQuery
-        if (btn.getAttribute('form')) {
-          if (jq && jq(form).valid?.() === false) e.preventDefault()
-          return
-        }
-        e.preventDefault()
-        if (!jq || jq(form).valid?.() !== false) form.requestSubmit()
+        if (jq && jq(form).valid?.() === false) return
+        form.requestSubmit()
       })
     })
 }

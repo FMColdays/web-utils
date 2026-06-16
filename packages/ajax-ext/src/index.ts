@@ -21,8 +21,8 @@ function hasAnyExtension(opts: AjaxExtOptions, el: HTMLElement): boolean {
     opts.loadingText  !== undefined ||
     opts.reset        ||
     opts.scrollTo     !== undefined ||
-    opts.toast        !== undefined ||
-    opts.toastError   !== undefined ||
+    opts.notify       !== undefined ||
+    opts.notifyError  !== undefined ||
     opts.redirect     !== undefined ||
     opts.toggle       !== undefined ||
     opts.open         !== undefined ||

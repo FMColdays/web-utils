@@ -11,10 +11,10 @@ export interface AjaxExtOptions {
   reset?: boolean
   /** Selector CSS al que hacer scroll al completar. */
   scrollTo?: string
-  /** Mensaje notify de exito al completar. */
-  toast?: string
-  /** Mensaje notify de error al completar. */
-  toastError?: string
+  /** Mensaje notify de exito al completar. Tiene prioridad sobre el mensaje del backend. */
+  notify?: string
+  /** Mensaje notify de error al completar. Tiene prioridad sobre el mensaje del backend. */
+  notifyError?: string
   /** URL a la que redirigir al completar con exito. */
   redirect?: string
   /** Selector CSS del elemento a mostrar/ocultar al completar. */

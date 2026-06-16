@@ -1,4 +1,4 @@
-import { notify, toast } from '@fmcoldays/toast'
+import { notify } from '@fmcoldays/toast'
 import type { AjaxExtOptions } from '../interfaces'
 import {
   applyLoadingState,
@@ -65,14 +65,10 @@ export async function handleAjaxComplete(xhr: XMLHttpRequest): Promise<void> {
   if (!success) {
     reparseFormValidation(form)
     if (!opts.mute) {
-      const msg = backendMessage ?? opts.toastError
+      // Atributo data-ajax-notify-error tiene prioridad sobre mensaje del backend
+      const msg = opts.notifyError ?? backendMessage
       if (msg) {
-        if (form.closest('dialog')) {
-          // Dentro de dialog: toast animado (no bloquea el form)
-          toast.error(msg)
-        } else {
-          await notify({ type: 'error', title: 'Error', message: msg })
-        }
+        await notify({ type: 'error', title: 'Error', message: msg })
       }
     }
     return
@@ -95,11 +91,11 @@ export async function handleAjaxComplete(xhr: XMLHttpRequest): Promise<void> {
   const navigate = (): void => {
     if (opts.redirect) { window.location.href = opts.redirect; return }
 
-    if (opts.open && (window as any).initModal) { (window as any).initModal(opts.open); return }
+    if (opts.open && (window as any).openModal) { (window as any).openModal(opts.open); return }
 
-    if (opts.refreshModal && (window as any).initModal) {
+    if (opts.refreshModal && (window as any).openModal) {
       document.querySelector<HTMLDialogElement>('dialog[open]')?.close()
-      ;(window as any).initModal(opts.refreshModal)
+      ;(window as any).openModal(opts.refreshModal)
       return
     }
 
@@ -120,7 +116,8 @@ export async function handleAjaxComplete(xhr: XMLHttpRequest): Promise<void> {
   }
 
   if (!opts.mute) {
-    const msg = backendMessage ?? opts.toast
+    // Atributo data-ajax-notify tiene prioridad sobre mensaje del backend
+    const msg = opts.notify ?? backendMessage
     if (msg) {
       await notify({ type: 'success', title: 'Exito', message: msg })
       navigate()

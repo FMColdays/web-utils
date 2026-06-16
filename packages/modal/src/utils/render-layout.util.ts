@@ -33,7 +33,9 @@ export const renderLayout = (container: HTMLElement): void => {
     if (form) {
       if (!form.id) form.id = `modal-form-${Math.random().toString(36).slice(2)}`
       footer
-        .querySelectorAll<HTMLElement>('button[type="submit"], input[type="submit"]')
+        .querySelectorAll<HTMLElement>(
+          'button[type="submit"], input[type="submit"], button:not([type="button"]):not([type="reset"])'
+        )
         .forEach((btn) => btn.setAttribute('form', form.id))
     }
     const footerContent = footer.outerHTML

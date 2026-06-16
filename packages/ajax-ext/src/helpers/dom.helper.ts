@@ -12,7 +12,7 @@ export function applyLoadingState(trigger: HTMLElement, opts: AjaxExtOptions): s
     trigger.classList.add(...DISABLE_CLASSES)
   }
 
-  if (opts.loadingText) {
+  if (opts.loadingText && !(trigger instanceof HTMLFormElement)) {
     trigger.textContent = opts.loadingText
   }
 
@@ -77,11 +77,26 @@ export function dismissDialog(form: HTMLElement, selector?: string): void {
   dialog?.close()
 }
 
-/** Busca el boton de submit activo dentro de un form. */
+/** Busca el boton de submit activo dentro del form y en el footer del modal si existe. */
 export function findSubmitButton(form: HTMLFormElement): HTMLButtonElement | HTMLInputElement | null {
-  return (
+  const inner = (
     form.querySelector<HTMLButtonElement>('button[type="submit"]') ??
     form.querySelector<HTMLInputElement>('input[type="submit"]') ??
     form.querySelector<HTMLButtonElement>('button:not([type="button"]):not([type="reset"])')
   )
+  if (inner) return inner
+
+  // Buscar en el footer del modal (botones vinculados via atributo form=)
+  if (form.id) {
+    const footer = document.querySelector('[data-modal-slot="footer"]')
+    if (footer) {
+      return (
+        footer.querySelector<HTMLButtonElement>(`button[type="submit"][form="${form.id}"]`) ??
+        footer.querySelector<HTMLInputElement>(`input[type="submit"][form="${form.id}"]`) ??
+        footer.querySelector<HTMLButtonElement>(`button:not([type="button"]):not([type="reset"])[form="${form.id}"]`)
+      )
+    }
+  }
+
+  return null
 }
