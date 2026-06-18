@@ -63,13 +63,15 @@ Todos van en el mismo elemento `<form data-ajax="true">` o `<a data-ajax="true">
 
 | Atributo | Tipo | Descripción |
 |---|---|---|
-| `data-ajax-confirm` | `string` | Muestra un diálogo de confirmación async antes de enviar. El valor es el mensaje. |
-| `data-ajax-confirm-title` | `string` | Título del diálogo de confirmación. |
+| `data-ajax-confirm` | `"true"` | Activa el diálogo de confirmación antes de enviar. |
+| `data-ajax-confirm-title` | `string` | Título del diálogo. |
+| `data-ajax-confirm-description` | `string` | Mensaje descriptivo del diálogo. |
 
 ```html
 <form data-ajax="true"
-      data-ajax-confirm="¿Eliminar este registro?"
-      data-ajax-confirm-title="Confirmar eliminación">
+      data-ajax-confirm="true"
+      data-ajax-confirm-title="Confirmar eliminación"
+      data-ajax-confirm-description="¿Eliminar este registro? No se puede deshacer.">
 ```
 
 ### Loading state
@@ -186,8 +188,9 @@ return Json(new { success = false, message = "El correo ya existe." });
 <a data-ajax="true"
    data-ajax-method="post"
    data-ajax-url="/Clientes/Eliminar/5"
-   data-ajax-confirm="¿Eliminar este cliente? No se puede deshacer."
+   data-ajax-confirm="true"
    data-ajax-confirm-title="Eliminar cliente"
+   data-ajax-confirm-description="¿Eliminar este cliente? No se puede deshacer."
    data-ajax-reload="true">
   Eliminar
 </a>

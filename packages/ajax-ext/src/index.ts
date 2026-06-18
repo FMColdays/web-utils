@@ -16,7 +16,7 @@ function hasAnyExtension(opts: AjaxExtOptions, el: HTMLElement): boolean {
   if (opts.dismiss !== false && el.closest('dialog')) return true
 
   return !!(
-    opts.confirm      !== undefined ||
+    opts.confirm      ||
     opts.disable      ||
     opts.loadingText  !== undefined ||
     opts.reset        ||
@@ -56,12 +56,12 @@ document.addEventListener(
 
     const trigger = findSubmitButton(form) ?? form
 
-    if (opts.confirm !== undefined) {
+    if (opts.confirm) {
       e.preventDefault()
       e.stopImmediatePropagation()
       toastConfirm({
         title:       opts.confirmTitle,
-        message:     opts.confirm || '¿Estas seguro? Esta accion no se puede deshacer.',
+        message:     opts.confirmDescription ?? '¿Estas seguro? Esta accion no se puede deshacer.',
         confirmText: 'Si, continuar',
       }).then(ok => {
         if (!ok) return
@@ -94,12 +94,12 @@ document.addEventListener(
     const opts = parseAjaxExtOptions(anchor)
     if (!hasAnyExtension(opts, anchor)) return
 
-    if (opts.confirm !== undefined) {
+    if (opts.confirm) {
       e.preventDefault()
       e.stopImmediatePropagation()
       toastConfirm({
         title:       opts.confirmTitle,
-        message:     opts.confirm || '¿Estas seguro? Esta accion no se puede deshacer.',
+        message:     opts.confirmDescription ?? '¿Estas seguro? Esta accion no se puede deshacer.',
         confirmText: 'Si, continuar',
       }).then(ok => {
         if (!ok) return

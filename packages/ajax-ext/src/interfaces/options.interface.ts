@@ -1,8 +1,10 @@
 export interface AjaxExtOptions {
-  /** Mensaje para el dialogo de confirmacion antes de enviar. */
-  confirm?: string
+  /** Activa el dialogo de confirmacion antes de enviar. */
+  confirm?: boolean
   /** Titulo del dialogo de confirmacion. */
   confirmTitle?: string
+  /** Descripcion/mensaje del dialogo de confirmacion. */
+  confirmDescription?: string
   /** Deshabilita el form/boton durante la peticion. */
   disable?: boolean
   /** Texto del boton durante la peticion. */

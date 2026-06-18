@@ -4,8 +4,9 @@ import type { AjaxExtOptions } from '../interfaces'
 export function parseAjaxExtOptions(el: HTMLElement): AjaxExtOptions {
   const d = el.dataset
   return {
-    confirm:       d.ajaxConfirm,
-    confirmTitle:  d.ajaxConfirmTitle,
+    confirm:            d.ajaxConfirm === 'true',
+    confirmTitle:       d.ajaxConfirmTitle,
+    confirmDescription: d.ajaxConfirmDescription,
     disable:       d.ajaxDisable === 'true',
     loadingText:   d.ajaxLoadingText,
     reset:         d.ajaxReset === 'true',

@@ -1,5 +1,11 @@
 # @fmcoldays/ajax-ext
 
+## 0.3.0
+
+### Minor Changes
+
+- Cambiar data-ajax-confirm a boolean ("true") y agregar data-ajax-confirm-description para el mensaje
+
 ## 0.2.5
 
 ### Patch Changes

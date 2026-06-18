@@ -1,6 +1,6 @@
 {
   "name": "@fmcoldays/ajax-ext",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "Extiende data-ajax de jQuery Unobtrusive Ajax con confirmacion async, loading states, notificaciones y navegacion declarativa via atributos data-ajax-*.",
   "author": "fmcoldays",
   "license": "MIT",
