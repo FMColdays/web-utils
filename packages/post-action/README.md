@@ -8,7 +8,7 @@ en el DOM, notificaciones, descarga de archivos y redirección.
 npm install @fmcoldays/post-action
 ```
 
-> Las notificaciones y la confirmación las da [`@fmcoldays/toast`](../toast) (dependencia interna, se instala sola). Sin dependencias externas; inyecta sus propios estilos.
+> Las notificaciones y la confirmación las da [`@fmcoldays/notify`](../notify) (dependencia interna, se instala sola). Sin dependencias externas; inyecta sus propios estilos.
 
 ## Uso
 
@@ -73,7 +73,7 @@ Funciona en cualquier elemento clickeable (`<button>`, `<a>`, `<div>`, `<input>`
 | `data-action-download` | `"true"` | — | Trata la respuesta como archivo descargable (blob URL + descarga del navegador). El nombre se toma del header `Content-Disposition`. |
 | `data-action-silent` | `"true"` | — | Suprime la notificación de **éxito**. Los errores se muestran siempre. |
 | `data-action-success-msg` | `string` | `"La operación se completó exitosamente."` | Mensaje de éxito. |
-| `data-action-error-msg` | `string` | `"Ocurrió un error al realizar la operación."` | Mensaje de error (Notiflix). |
+| `data-action-error-msg` | `string` | `"Ocurrió un error al realizar la operación."` | Mensaje de error. |
 
 ### Post-éxito
 

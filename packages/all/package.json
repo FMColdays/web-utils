@@ -1,6 +1,6 @@
 {
   "name": "@fmcoldays/all",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "Meta-paquete: instala y registra todos los paquetes @fmcoldays de una vez.",
   "author": "fmcoldays",
   "license": "MIT",
@@ -43,7 +43,7 @@
     "@fmcoldays/post-action": "workspace:^",
     "@fmcoldays/modal": "workspace:^",
     "@fmcoldays/dropzone": "workspace:^",
-    "@fmcoldays/toast": "workspace:^",
+    "@fmcoldays/notify": "workspace:^",
     "@fmcoldays/shared": "workspace:^",
     "@fmcoldays/ajax-ext": "workspace:^"
   },

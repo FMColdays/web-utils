@@ -1,4 +1,4 @@
-import { notify } from '@fmcoldays/toast'
+import { popup } from '@fmcoldays/notify'
 import type { AjaxExtOptions } from '../interfaces'
 import {
   applyLoadingState,
@@ -68,7 +68,7 @@ export async function handleAjaxComplete(xhr: XMLHttpRequest): Promise<void> {
       // Atributo data-ajax-notify-error tiene prioridad sobre mensaje del backend
       const msg = opts.notifyError ?? backendMessage
       if (msg) {
-        await notify({ type: 'error', title: 'Error', message: msg })
+        await popup({ type: 'error', title: 'Error', message: msg })
       }
     }
     return
@@ -119,7 +119,7 @@ export async function handleAjaxComplete(xhr: XMLHttpRequest): Promise<void> {
     // Atributo data-ajax-notify tiene prioridad sobre mensaje del backend
     const msg = opts.notify ?? backendMessage
     if (msg) {
-      await notify({ type: 'success', title: 'Exito', message: msg })
+      await popup({ type: 'success', title: 'Exito', message: msg })
       navigate()
       return
     }

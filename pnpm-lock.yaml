@@ -20,9 +20,9 @@ importers:
 
   packages/ajax-ext:
     dependencies:
-      '@fmcoldays/toast':
+      '@fmcoldays/notify':
         specifier: workspace:^
-        version: link:../toast
+        version: link:../notify
     devDependencies:
       tsup:
         specifier: ^8.3.0
@@ -42,15 +42,15 @@ importers:
       '@fmcoldays/modal':
         specifier: workspace:^
         version: link:../modal
+      '@fmcoldays/notify':
+        specifier: workspace:^
+        version: link:../notify
       '@fmcoldays/post-action':
         specifier: workspace:^
         version: link:../post-action
       '@fmcoldays/shared':
         specifier: workspace:^
         version: link:../shared
-      '@fmcoldays/toast':
-        specifier: workspace:^
-        version: link:../toast
     devDependencies:
       tsup:
         specifier: ^8.3.0
@@ -85,14 +85,23 @@ importers:
         specifier: ^5.6.3
         version: 5.9.3
 
+  packages/notify:
+    devDependencies:
+      tsup:
+        specifier: ^8.3.0
+        version: 8.5.1(typescript@5.9.3)
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+
   packages/post-action:
     dependencies:
+      '@fmcoldays/notify':
+        specifier: workspace:^
+        version: link:../notify
       '@fmcoldays/shared':
         specifier: workspace:^
         version: link:../shared
-      '@fmcoldays/toast':
-        specifier: workspace:^
-        version: link:../toast
     devDependencies:
       tsup:
         specifier: ^8.3.0
@@ -102,15 +111,6 @@ importers:
         version: 5.9.3
 
   packages/shared:
-    devDependencies:
-      tsup:
-        specifier: ^8.3.0
-        version: 8.5.1(typescript@5.9.3)
-      typescript:
-        specifier: ^5.6.3
-        version: 5.9.3
-
-  packages/toast:
     devDependencies:
       tsup:
         specifier: ^8.3.0

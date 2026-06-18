@@ -2,9 +2,9 @@
 
 Extiende **jQuery Unobtrusive Ajax** (`data-ajax="true"`) con comportamientos declarativos via atributos `data-ajax-*` adicionales.
 
-- Confirmación async con `@fmcoldays/toast` (reemplaza `window.confirm`)
+- Confirmación async con `@fmcoldays/notify` (reemplaza `window.confirm`)
 - Loading state en el botón de submit
-- Notificaciones de éxito/error con `notify` de `@fmcoldays/toast`
+- Notificaciones de éxito/error con `notify` de `@fmcoldays/notify`
 - Dismiss automático del `<dialog>` al completar con éxito
 - Redirect, reload, toggle, scroll, reset de form
 - Encadenar acciones con `data-ajax-then`
@@ -17,7 +17,7 @@ Sin jQuery directo — usa `window.$` en runtime (ASP.NET MVC lo provee globalme
 ## Instalación
 
 ```bash
-npm install @fmcoldays/ajax-ext @fmcoldays/toast
+npm install @fmcoldays/ajax-ext
 ```
 
 O con el meta-paquete que incluye todo:
@@ -89,14 +89,14 @@ Todos van en el mismo elemento `<form data-ajax="true">` o `<a data-ajax="true">
 
 | Atributo | Tipo | Descripción |
 |---|---|---|
-| `data-ajax-toast` | `string` | Mensaje `notify` de éxito al completar. Si el backend devuelve `{ message }`, ese tiene prioridad. |
-| `data-ajax-toast-error` | `string` | Mensaje `notify` de error. También usa `message` del backend si viene. |
+| `data-ajax-notify` | `string` | Mensaje `notify` de éxito al completar. Si el backend devuelve `{ message }`, ese tiene prioridad. |
+| `data-ajax-notify-error` | `string` | Mensaje `notify` de error. También usa `message` del backend si viene. |
 | `data-ajax-mute` | `"true"` | Suprime todas las notificaciones. |
 
 ```html
 <form data-ajax="true"
-      data-ajax-toast="Registro guardado correctamente."
-      data-ajax-toast-error="No se pudo guardar. Intenta de nuevo.">
+      data-ajax-notify="Registro guardado correctamente."
+      data-ajax-notify-error="No se pudo guardar. Intenta de nuevo.">
 ```
 
 El backend puede sobrescribir el mensaje devolviendo JSON:
@@ -113,7 +113,7 @@ El backend puede sobrescribir el mensaje devolviendo JSON:
 | `data-ajax-redirect` | `string` (URL) | Redirige a la URL indicada. |
 | `data-ajax-reload` | `"true"` | Recarga la página actual. |
 | `data-ajax-then` | `string` (selector) | Dispara click o submit en el elemento indicado. Útil para refrescar una tabla/lista tras guardar. |
-| `data-ajax-open` | `string` (URL) | Abre un nuevo modal con la URL indicada (requiere `window.initModal`). |
+| `data-ajax-open` | `string` (URL) | Abre un nuevo modal con la URL indicada (requiere `window.openModal`). |
 | `data-ajax-refresh-modal` | `string` (URL) | Cierra el modal actual y lo reabre con nueva URL. |
 
 ```html
@@ -147,8 +147,8 @@ El backend puede sobrescribir el mensaje devolviendo JSON:
 El paquete parsea automáticamente la respuesta si es JSON:
 
 ```json
-{ "success": true,  "message": "Texto opcional que sobreescribe data-ajax-toast" }
-{ "success": false, "message": "Texto opcional que sobreescribe data-ajax-toast-error" }
+{ "success": true,  "message": "Texto opcional que sobreescribe data-ajax-notify" }
+{ "success": false, "message": "Texto opcional que sobreescribe data-ajax-notify-error" }
 ```
 
 - `success: false` activa el flujo de error aunque HTTP sea 200.

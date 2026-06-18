@@ -1,12 +1,20 @@
 {
-  "name": "@fmcoldays/toast",
-  "version": "0.1.4",
+  "name": "@fmcoldays/notify",
+  "version": "3.0.0",
   "description": "Toasts animados, confirm y notify. Sin dependencias externas, inyecta sus propios estilos.",
   "author": "fmcoldays",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
-  "keywords": ["toast", "notification", "confirm", "notify", "dialog", "svg", "dom"],
+  "keywords": [
+    "toast",
+    "notification",
+    "confirm",
+    "notify",
+    "dialog",
+    "svg",
+    "dom"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,7 +25,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

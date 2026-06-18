@@ -1,6 +1,6 @@
 {
   "name": "@fmcoldays/post-action",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Ejecuta peticiones HTTP declarativas al hacer click en elementos con data-action-url (confirmación, loading, targets, notificaciones, descarga, redirección).",
   "author": "fmcoldays",
   "license": "MIT",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@fmcoldays/shared": "workspace:^",
-    "@fmcoldays/toast": "workspace:^"
+    "@fmcoldays/notify": "workspace:^"
   },
   "devDependencies": {
     "tsup": "^8.3.0",

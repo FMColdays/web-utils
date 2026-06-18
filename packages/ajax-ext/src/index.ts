@@ -1,4 +1,4 @@
-import { confirm as toastConfirm } from '@fmcoldays/toast'
+import { confirm as toastConfirm } from '@fmcoldays/notify'
 import { parseAjaxExtOptions, findSubmitButton } from './helpers'
 import { setPending, handleAjaxSend, handleAjaxComplete, isAjaxExtPending } from './services'
 import type { AjaxExtOptions } from './interfaces'

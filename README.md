@@ -12,9 +12,9 @@ todos los proyectos consumen la nueva versión.
 | [`@fmcoldays/post-action`](packages/post-action) | Peticiones HTTP declarativas con `data-action-*`. | Público |
 | [`@fmcoldays/modal`](packages/modal) | Carga vistas parciales Razor en un `<dialog>` vía AJAX (shell auto-inyectado, drag, tamaños). | Público |
 | [`@fmcoldays/dropzone`](packages/dropzone) | Carga de archivos con drag & drop, preview y lightbox. | Público |
-| [`@fmcoldays/toast`](packages/toast) | Notificaciones (toasts) y diálogo de confirmación. Sin deps externas. | Público |
+| [`@fmcoldays/notify`](packages/notify) | Notificaciones (toasts) y diálogo de confirmación. Sin deps externas. | Público |
 
-`post-action`, `modal` y `dropzone` dependen de `shared`. `post-action` además usa `toast` para notificaciones/confirmación.
+`post-action`, `modal` y `dropzone` dependen de `shared`. `post-action` además usa `notify` para notificaciones/confirmación.
 
 ## Stack
 

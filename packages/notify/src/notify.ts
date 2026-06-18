@@ -101,7 +101,7 @@ function mountNotifyStyles(): void {
  * Un solo botón — el usuario debe aceptar para cerrar.
  * Resuelve cuando el usuario hace click en Aceptar, en el backdrop o presiona ESC.
  */
-export function notify(options: NotifyOptions = {}): Promise<void> {
+export function popup(options: NotifyOptions = {}): Promise<void> {
   const {
     title = 'Éxito',
     message = '',

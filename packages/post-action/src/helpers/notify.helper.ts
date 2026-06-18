@@ -1,4 +1,4 @@
-import { toast, confirm } from '@fmcoldays/toast'
+import { popup, confirm } from '@fmcoldays/notify'
 import type { ActionOptions } from '@/types'
 
 /** Muestra el diálogo de confirmación. Resuelve a `true` si el usuario confirma. */
@@ -15,13 +15,10 @@ export function askConfirmation(opts: ActionOptions): Promise<boolean> {
 /** Notifica éxito salvo que `silent` esté activo. Prefiere el mensaje del servidor. */
 export async function notifySuccess(opts: ActionOptions, serverMsg?: string): Promise<void> {
   if (opts.silent) return
-  toast.success('Éxito', { description: serverMsg ?? opts.successMsg })
+  await popup({ type: 'success', title: 'Éxito', message: serverMsg ?? opts.successMsg })
 }
 
-/**
- * Notifica error. Los errores se muestran SIEMPRE (incluso con `silent`),
- * porque `silent` solo silencia el toast de éxito. Prefiere el mensaje del servidor.
- */
-export function notifyError(opts: ActionOptions, serverMsg?: string): void {
-  toast.error('Error', { description: serverMsg ?? opts.errorMsg })
+/** Notifica error. Los errores se muestran SIEMPRE (incluso con `silent`). */
+export async function notifyError(opts: ActionOptions, serverMsg?: string): Promise<void> {
+  await popup({ type: 'error', title: 'Error', message: serverMsg ?? opts.errorMsg })
 }
