@@ -12,8 +12,10 @@ import { triggerDownload, parseServerMessage } from '@/helpers'
 export async function executeRequest(opts: ActionOptions): Promise<ActionResult> {
   let res: Response
 
+  const xhrHeader = { 'X-Requested-With': 'XMLHttpRequest' }
+
   if (opts.formData) {
-    res = await fetch(opts.url, { method: opts.method, body: opts.formData })
+    res = await fetch(opts.url, { method: opts.method, body: opts.formData, headers: xhrHeader })
   } else {
     const { url, method, headers, body } = buildHttpPayload({
       url: opts.url,
@@ -23,7 +25,7 @@ export async function executeRequest(opts: ActionOptions): Promise<ActionResult>
       pick: opts.pick,
       csrf: opts.csrf,
     })
-    res = await fetch(url, { method, headers, body })
+    res = await fetch(url, { method, headers: { ...headers as Record<string, string>, ...xhrHeader }, body })
   }
 
   if (!res.ok) {
