@@ -4,13 +4,13 @@ import type { ActionOptions } from '@/types'
  * Lee los atributos `data-action-*` de un trigger y los normaliza en un
  * objeto {@link ActionOptions}. Devuelve `null` si falta `data-action-url`.
  */
-export function parseOptions(trigger: HTMLElement): ActionOptions | null {
-  const url = trigger.dataset.actionUrl
+export function parseOptions(trigger: HTMLElement, fallback?: { url?: string; method?: string }): ActionOptions | null {
+  const url = trigger.dataset.actionUrl ?? fallback?.url
   if (!url) return null
 
   return {
     url,
-    method: trigger.dataset.actionMethod ?? 'POST',
+    method: trigger.dataset.actionMethod ?? fallback?.method ?? 'POST',
     silent: trigger.dataset.actionSilent === 'true',
     reloadOnSuccess: trigger.dataset.actionReload === 'true',
     redirect: trigger.dataset.actionRedirect,
@@ -18,7 +18,7 @@ export function parseOptions(trigger: HTMLElement): ActionOptions | null {
     errorMsg: trigger.dataset.actionErrorMsg ?? 'Ocurrió un error al realizar la operación.',
     confirm: trigger.dataset.actionConfirm === 'true',
     confirmTitle: trigger.dataset.actionConfirmTitle ?? '¿Estás seguro?',
-    confirmMsg: trigger.dataset.actionConfirmMsg ?? 'Esta acción no se puede deshacer.',
+    confirmDescription: trigger.dataset.actionConfirmDescription ?? 'Esta acción no se puede deshacer.',
     bodyJson: trigger.dataset.actionBody,
     bodyForm: trigger.dataset.actionBodyForm,
     pick: (() => {

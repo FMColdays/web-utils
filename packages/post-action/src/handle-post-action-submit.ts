@@ -1,47 +1,42 @@
 import {
   parseOptions,
+  findSubmitButton,
   applyLoadingState,
   removeLoadingState,
   updateTarget,
-  applyInputChange,
   askConfirmation,
   notifySuccess,
   notifyError,
 } from '@/helpers'
 import { executeRequest } from '@/services'
 
-/**
- * Handler de click para `post-action`. Resuelve el trigger más cercano con
- * `data-action-url` y orquesta el ciclo completo: confirmación → loading →
- * petición → actualización de DOM → notificación → post-éxito.
- */
-export async function handlePostActionClick(e: MouseEvent): Promise<void> {
-  const target = e.target as HTMLElement
-  const trigger = target.closest<HTMLElement>('[data-action="true"]')
-  if (!trigger) return
+export async function handlePostActionSubmit(e: Event): Promise<void> {
+  const form = (e.target as HTMLElement).closest<HTMLFormElement>('form[data-action="true"]')
+  if (!form) return
 
   e.preventDefault()
 
-  const isAnchor = trigger instanceof HTMLAnchorElement
-  const opts = parseOptions(trigger, {
-    url:    isAnchor && trigger.hasAttribute('href') ? trigger.href : undefined,
-    method: isAnchor ? 'GET' : undefined,
+  const opts = parseOptions(form, {
+    url:    form.hasAttribute('action') ? form.action : undefined,
+    method: form.hasAttribute('method') ? form.method.toUpperCase() : undefined,
   })
   if (!opts) return
 
-  const inputEl = trigger instanceof HTMLInputElement ? trigger : null
+  // Si no hay body explícito, usar los campos del form
+  if (!opts.bodyJson && !opts.bodyForm && !opts.pick) {
+    opts.formData = new FormData(form)
+  }
 
   if (opts.confirm) {
     const confirmed = await askConfirmation(opts)
     if (!confirmed) return
   }
 
-  applyLoadingState(trigger, inputEl, opts)
+  const submitBtn = findSubmitButton(form)
+  applyLoadingState(submitBtn ?? form, null, opts)
 
   try {
     const { response, serverMsg } = await executeRequest(opts)
-
-    applyInputChange(inputEl)
 
     if (response) await updateTarget(response, opts)
 
@@ -57,6 +52,6 @@ export async function handlePostActionClick(e: MouseEvent): Promise<void> {
     const serverMsg = (err as { serverMsg?: string })?.serverMsg
     notifyError(opts, serverMsg)
   } finally {
-    removeLoadingState(trigger, inputEl, opts)
+    removeLoadingState(submitBtn ?? form, null, opts)
   }
 }

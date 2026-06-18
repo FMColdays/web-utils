@@ -9,7 +9,7 @@ export interface ActionOptions {
   errorMsg: string
   confirm: boolean
   confirmTitle: string
-  confirmMsg: string
+  confirmDescription: string
   bodyJson?: string
   bodyForm?: string
   pick?: Record<string, string>
@@ -20,4 +20,5 @@ export interface ActionOptions {
   thenSel?: string
   csrf: boolean
   download: boolean
+  formData?: FormData
 }

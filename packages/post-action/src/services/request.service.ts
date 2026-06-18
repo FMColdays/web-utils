@@ -10,16 +10,21 @@ import { triggerDownload, parseServerMessage } from '@/helpers'
  * @throws Un `Error` con `serverMsg` adjunto cuando la respuesta no es `ok`.
  */
 export async function executeRequest(opts: ActionOptions): Promise<ActionResult> {
-  const { url, method, headers, body } = buildHttpPayload({
-    url: opts.url,
-    method: opts.method,
-    bodyJson: opts.bodyJson,
-    bodyForm: opts.bodyForm,
-    pick: opts.pick,
-    csrf: opts.csrf,
-  })
+  let res: Response
 
-  const res = await fetch(url, { method, headers, body })
+  if (opts.formData) {
+    res = await fetch(opts.url, { method: opts.method, body: opts.formData })
+  } else {
+    const { url, method, headers, body } = buildHttpPayload({
+      url: opts.url,
+      method: opts.method,
+      bodyJson: opts.bodyJson,
+      bodyForm: opts.bodyForm,
+      pick: opts.pick,
+      csrf: opts.csrf,
+    })
+    res = await fetch(url, { method, headers, body })
+  }
 
   if (!res.ok) {
     const serverMsg = await parseServerMessage(res)

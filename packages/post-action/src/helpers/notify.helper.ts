@@ -5,7 +5,7 @@ import type { ActionOptions } from '@/types'
 export function askConfirmation(opts: ActionOptions): Promise<boolean> {
   return confirm({
     title: opts.confirmTitle,
-    message: opts.confirmMsg,
+    message: opts.confirmDescription,
     confirmText: 'Sí, continuar',
     cancelText: 'Cancelar',
     type: 'warning',

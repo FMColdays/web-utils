@@ -49,6 +49,11 @@ export async function updateTarget(res: Response, opts: ActionOptions): Promise<
   else targetEl.innerHTML = value
 }
 
+/** Retorna el botón de submit activo de un form, o null si no hay. */
+export function findSubmitButton(form: HTMLFormElement): HTMLButtonElement | HTMLInputElement | null {
+  return form.querySelector<HTMLButtonElement | HTMLInputElement>('[type="submit"]:not([disabled])')
+}
+
 /** Togglea el estado de un checkbox/radio tras una acción exitosa. */
 export function applyInputChange(inputEl: HTMLInputElement | null): void {
   if (!inputEl) return
