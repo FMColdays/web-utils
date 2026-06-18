@@ -15,7 +15,13 @@ export async function executeRequest(opts: ActionOptions): Promise<ActionResult>
   const xhrHeader = { 'X-Requested-With': 'XMLHttpRequest' }
 
   if (opts.formData) {
-    res = await fetch(opts.url, { method: opts.method, body: opts.formData, headers: xhrHeader })
+    if (opts.method === 'GET') {
+      const params = new URLSearchParams(opts.formData as unknown as Record<string, string>)
+      const sep = opts.url.includes('?') ? '&' : '?'
+      res = await fetch(`${opts.url}${sep}${params}`, { method: 'GET', headers: xhrHeader })
+    } else {
+      res = await fetch(opts.url, { method: opts.method, body: opts.formData, headers: xhrHeader })
+    }
   } else {
     const { url, method, headers, body } = buildHttpPayload({
       url: opts.url,
