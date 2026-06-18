@@ -4,6 +4,7 @@ import {
   applyLoadingState,
   removeLoadingState,
   updateTarget,
+  dismissDialog,
   askConfirmation,
   notifySuccess,
   notifyError,
@@ -18,7 +19,7 @@ export async function handlePostActionSubmit(e: Event): Promise<void> {
 
   const opts = parseOptions(form, {
     url:    form.hasAttribute('action') ? form.action : undefined,
-    method: form.hasAttribute('method') ? form.method.toUpperCase() : undefined,
+    method: form.method.toUpperCase(), // form.method siempre devuelve 'get' o 'post' (default 'get')
   })
   if (!opts) return
 
@@ -41,6 +42,8 @@ export async function handlePostActionSubmit(e: Event): Promise<void> {
     if (response) await updateTarget(response, opts)
 
     if (!opts.download) await notifySuccess(opts, serverMsg)
+
+    dismissDialog(form, opts.dismiss)
 
     if (opts.thenSel) {
       document.querySelector<HTMLElement>(opts.thenSel)?.click()

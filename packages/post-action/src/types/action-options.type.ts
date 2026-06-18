@@ -20,5 +20,6 @@ export interface ActionOptions {
   thenSel?: string
   csrf: boolean
   download: boolean
+  dismiss?: string | false
   formData?: FormData
 }

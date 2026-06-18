@@ -37,5 +37,6 @@ export function parseOptions(trigger: HTMLElement, fallback?: { url?: string; me
     thenSel: trigger.dataset.actionThen,
     csrf: trigger.dataset.actionCsrf === 'true',
     download: trigger.dataset.actionDownload === 'true',
+    dismiss: trigger.dataset.actionDismiss === 'false' ? false : trigger.dataset.actionDismiss,
   }
 }

@@ -42,7 +42,7 @@ Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<div>`…) mediant
 | Atributo | Tipo | Default | Descripción |
 |---|---|---|---|
 | `data-action-url` | `string` (URL) | — | URL de la petición. Si se omite: en `<form>` usa el atributo `action`; en `<a>` usa el `href`. |
-| `data-action-method` | `string` | `"POST"` | Método HTTP. Si se omite: en `<form>` usa el atributo `method`; en `<a>` usa `GET`. |
+| `data-action-method` | `string` | `"POST"` | Método HTTP. Si se omite: en `<form>` usa el atributo `method` (default `GET` del browser); en `<a>` usa `GET`; en otros elementos usa `POST`. |
 | `data-action-body` | `string` (JSON) | — | Body como JSON literal. En GET se añade al query string. |
 | `data-action-body-form` | `string` (selector) | — | Selector de un `<form>` cuyo contenido se envía como `FormData` (POST) o query string (GET). |
 | `data-action-pick` | `string` (JSON) | — | Mapa `{ "campo": "#selector" }` resuelto al momento del click. GET → query string. POST → body JSON. |

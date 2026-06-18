@@ -4,6 +4,7 @@ import {
   removeLoadingState,
   updateTarget,
   applyInputChange,
+  dismissDialog,
   askConfirmation,
   notifySuccess,
   notifyError,
@@ -46,6 +47,8 @@ export async function handlePostActionClick(e: MouseEvent): Promise<void> {
     if (response) await updateTarget(response, opts)
 
     if (!opts.download) await notifySuccess(opts, serverMsg)
+
+    dismissDialog(trigger, opts.dismiss)
 
     if (opts.thenSel) {
       document.querySelector<HTMLElement>(opts.thenSel)?.click()

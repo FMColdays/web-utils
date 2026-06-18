@@ -49,6 +49,15 @@ export async function updateTarget(res: Response, opts: ActionOptions): Promise<
   else targetEl.innerHTML = value
 }
 
+/** Cierra el dialog padre o el especificado por selector. `false` = nunca cerrar. */
+export function dismissDialog(trigger: HTMLElement, dismiss: string | false | undefined): void {
+  if (dismiss === false) return
+  const dialog = (dismiss && dismiss !== 'true')
+    ? document.querySelector<HTMLDialogElement>(dismiss)
+    : trigger.closest<HTMLDialogElement>('dialog')
+  dialog?.close()
+}
+
 /** Retorna el botón de submit activo de un form, o null si no hay. */
 export function findSubmitButton(form: HTMLFormElement): HTMLButtonElement | HTMLInputElement | null {
   return form.querySelector<HTMLButtonElement | HTMLInputElement>('[type="submit"]:not([disabled])')
