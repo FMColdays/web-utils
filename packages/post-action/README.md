@@ -31,24 +31,24 @@ Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<div>`…) mediant
 
 ## Atributos
 
-### Requeridos
+### Requerido
 
 | Atributo | Tipo | Descripción |
 |---|---|---|
 | `data-action` | `"true"` | Activa el listener en el elemento. |
-| `data-action-url` | `string` (URL) | URL a la que se hace la petición. |
 
 ### Petición
 
 | Atributo | Tipo | Default | Descripción |
 |---|---|---|---|
-| `data-action-method` | `string` | `"POST"` | Método HTTP (`GET`, `POST`, `PUT`, `DELETE`, etc.). |
+| `data-action-url` | `string` (URL) | — | URL de la petición. Si se omite: en `<form>` usa el atributo `action`; en `<a>` usa el `href`. |
+| `data-action-method` | `string` | `"POST"` | Método HTTP. Si se omite: en `<form>` usa el atributo `method`; en `<a>` usa `GET`. |
 | `data-action-body` | `string` (JSON) | — | Body como JSON literal. En GET se añade al query string. |
 | `data-action-body-form` | `string` (selector) | — | Selector de un `<form>` cuyo contenido se envía como `FormData` (POST) o query string (GET). |
 | `data-action-pick` | `string` (JSON) | — | Mapa `{ "campo": "#selector" }` resuelto al momento del click. GET → query string. POST → body JSON. |
 | `data-action-csrf` | `"true"` | — | Incluye el token CSRF en el header `RequestVerificationToken`. |
 
-> **Forms:** Si el propio elemento es un `<form data-action="true">`, los campos del form se envían automáticamente como `FormData` al hacer submit. No hace falta `data-action-body-form`.
+> **Forms:** `<form data-action="true">` intercepta el submit y envía los campos como `FormData`. El token CSRF de ASP.NET (campo oculto `__RequestVerificationToken`) va incluido automáticamente.
 
 ### Confirmación
 
@@ -106,8 +106,10 @@ Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<div>`…) mediant
 ### Form — guardar y refrescar tabla
 
 ```html
-<form data-action="true"
-      data-action-url="/Clientes/Crear"
+<!-- action y method del form se usan como fallback, no hace falta data-action-url -->
+<form action="/Clientes/Crear"
+      method="post"
+      data-action="true"
       data-action-disable="true"
       data-action-then="#filtro-form">
 
@@ -120,8 +122,9 @@ Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<div>`…) mediant
 ### Form — confirmar antes de enviar
 
 ```html
-<form data-action="true"
-      data-action-url="/Pedidos/Confirmar"
+<form action="/Pedidos/Confirmar"
+      method="post"
+      data-action="true"
       data-action-confirm="true"
       data-action-confirm-title="Confirmar pedido"
       data-action-confirm-description="¿Enviar este pedido? No se puede modificar después."
@@ -130,6 +133,18 @@ Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<div>`…) mediant
   <!-- campos -->
   <button type="submit">Confirmar</button>
 </form>
+```
+
+### Enlace que inyecta HTML (GET desde href)
+
+```html
+<!-- href se usa como URL y GET como method por defecto -->
+<a href="/Clientes/42/Detalle"
+   data-action="true"
+   data-action-target="#panel-detalle"
+   data-action-silent="true">
+  Ver detalle
+</a>
 ```
 
 ### GET que inyecta HTML en un target
