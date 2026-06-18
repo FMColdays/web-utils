@@ -1,6 +1,6 @@
 {
   "name": "@fmcoldays/post-action",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Ejecuta peticiones HTTP declarativas al hacer click en elementos con data-action-url (confirmación, loading, targets, notificaciones, descarga, redirección).",
   "author": "fmcoldays",
   "license": "MIT",
