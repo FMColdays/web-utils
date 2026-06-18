@@ -58,6 +58,14 @@ export function dismissDialog(trigger: HTMLElement, dismiss: string | false | un
   dialog?.close()
 }
 
+/** Dispara el elemento indicado: submit si es form, click si es cualquier otro. */
+export function triggerThen(sel: string): void {
+  const el = document.querySelector<HTMLElement>(sel)
+  if (!el) return
+  if (el instanceof HTMLFormElement) el.requestSubmit()
+  else el.click()
+}
+
 /** Retorna el botón de submit activo de un form, o null si no hay. */
 export function findSubmitButton(form: HTMLFormElement): HTMLButtonElement | HTMLInputElement | null {
   return form.querySelector<HTMLButtonElement | HTMLInputElement>('[type="submit"]:not([disabled])')

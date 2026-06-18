@@ -5,6 +5,7 @@ import {
   updateTarget,
   applyInputChange,
   dismissDialog,
+  triggerThen,
   askConfirmation,
   notifySuccess,
   notifyError,
@@ -50,9 +51,7 @@ export async function handlePostActionClick(e: MouseEvent): Promise<void> {
 
     dismissDialog(trigger, opts.dismiss)
 
-    if (opts.thenSel) {
-      document.querySelector<HTMLElement>(opts.thenSel)?.click()
-    }
+    if (opts.thenSel) triggerThen(opts.thenSel)
 
     if (opts.redirect) window.location.href = opts.redirect
     else if (opts.reloadOnSuccess) location.reload()
