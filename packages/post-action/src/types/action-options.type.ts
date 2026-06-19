@@ -22,4 +22,5 @@ export interface ActionOptions {
   download: boolean
   dismiss?: string | false
   formData?: FormData
+  skeleton?: string | false
 }

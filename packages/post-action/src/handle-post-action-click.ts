@@ -8,6 +8,7 @@ import {
   askConfirmation,
   notifySuccess,
   notifyError,
+  injectSkeleton,
 } from '@/helpers'
 import { executeRequest } from '@/services'
 
@@ -20,6 +21,7 @@ export async function handlePostActionClick(e: MouseEvent): Promise<void> {
   const target = e.target as HTMLElement
   const trigger = target.closest<HTMLElement>('[data-action="true"]')
   if (!trigger) return
+  if (trigger instanceof HTMLFormElement) return // forms handled by submit listener
 
   e.preventDefault()
 
@@ -38,6 +40,7 @@ export async function handlePostActionClick(e: MouseEvent): Promise<void> {
   }
 
   applyLoadingState(trigger, inputEl, opts)
+  injectSkeleton(opts)
 
   try {
     const { response, serverMsg } = await executeRequest(opts)
@@ -46,11 +49,15 @@ export async function handlePostActionClick(e: MouseEvent): Promise<void> {
 
     if (response) await updateTarget(response, opts)
 
-    if (!opts.download) await notifySuccess(opts, serverMsg)
-
     dismissDialog(trigger, opts.dismiss)
 
-    if (opts.thenSel) document.querySelector<HTMLElement>(opts.thenSel)?.click()
+    if (!opts.silent && !opts.targetSel) await notifySuccess(opts, serverMsg)
+
+    if (opts.thenSel) {
+      const thenEl = document.querySelector<HTMLElement>(opts.thenSel)
+      if (thenEl instanceof HTMLFormElement) thenEl.requestSubmit()
+      else thenEl?.click()
+    }
 
     if (opts.redirect) window.location.href = opts.redirect
     else if (opts.reloadOnSuccess) location.reload()

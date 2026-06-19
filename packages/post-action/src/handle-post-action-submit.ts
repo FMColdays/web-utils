@@ -8,6 +8,7 @@ import {
   askConfirmation,
   notifySuccess,
   notifyError,
+  injectSkeleton,
 } from '@/helpers'
 import { executeRequest } from '@/services'
 
@@ -35,17 +36,22 @@ export async function handlePostActionSubmit(e: Event): Promise<void> {
 
   const submitBtn = findSubmitButton(form)
   applyLoadingState(submitBtn ?? form, null, opts)
+  injectSkeleton(opts)
 
   try {
     const { response, serverMsg } = await executeRequest(opts)
 
     if (response) await updateTarget(response, opts)
 
-    if (!opts.download) await notifySuccess(opts, serverMsg)
-
     dismissDialog(form, opts.dismiss)
 
-    if (opts.thenSel) document.querySelector<HTMLElement>(opts.thenSel)?.click()
+    if (!opts.silent && !opts.targetSel) await notifySuccess(opts, serverMsg)
+
+    if (opts.thenSel) {
+      const thenEl = document.querySelector<HTMLElement>(opts.thenSel)
+      if (thenEl instanceof HTMLFormElement) thenEl.requestSubmit()
+      else thenEl?.click()
+    }
 
     if (opts.redirect) window.location.href = opts.redirect
     else if (opts.reloadOnSuccess) location.reload()

@@ -11,7 +11,8 @@ export function parseOptions(trigger: HTMLElement, fallback?: { url?: string; me
   return {
     url,
     method: trigger.dataset.actionMethod ?? fallback?.method ?? 'POST',
-    silent: trigger.dataset.actionSilent === 'true',
+    silent: trigger.dataset.actionSilent === 'true' ||
+      (trigger.dataset.actionSilent !== 'false' && trigger.dataset.actionDownload === 'true'),
     reloadOnSuccess: trigger.dataset.actionReload === 'true',
     redirect: trigger.dataset.actionRedirect,
     successMsg: trigger.dataset.actionSuccessMsg ?? 'La operación se completó exitosamente.',
@@ -30,7 +31,7 @@ export function parseOptions(trigger: HTMLElement, fallback?: { url?: string; me
         return undefined
       }
     })(),
-    disable: trigger.dataset.actionDisable === 'true',
+    disable: trigger.dataset.actionDisable !== 'false',
     loadingClass: trigger.dataset.actionLoadingClass,
     targetSel: trigger.dataset.actionTarget,
     targetProp: (trigger.dataset.actionTargetProp ?? 'html') as ActionOptions['targetProp'],
@@ -38,5 +39,6 @@ export function parseOptions(trigger: HTMLElement, fallback?: { url?: string; me
     csrf: trigger.dataset.actionCsrf === 'true',
     download: trigger.dataset.actionDownload === 'true',
     dismiss: trigger.dataset.actionDismiss === 'false' ? false : trigger.dataset.actionDismiss,
+    skeleton: trigger.dataset.actionSkeleton === 'false' ? false : trigger.dataset.actionSkeleton,
   }
 }
