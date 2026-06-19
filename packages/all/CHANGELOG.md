@@ -1,5 +1,12 @@
 # @fmcoldays/all
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [942bfad]
+  - @fmcoldays/post-action@0.4.0
+
 ## 0.1.6
 
 ### Patch Changes

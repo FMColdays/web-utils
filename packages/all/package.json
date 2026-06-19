@@ -1,6 +1,6 @@
 {
   "name": "@fmcoldays/all",
-  "version": "0.1.13",
+  "version": "0.1.26",
   "description": "Meta-paquete: instala y registra todos los paquetes @fmcoldays de una vez.",
   "author": "fmcoldays",
   "license": "MIT",
@@ -40,12 +40,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@fmcoldays/post-action": "workspace:^",
-    "@fmcoldays/modal": "workspace:^",
     "@fmcoldays/dropzone": "workspace:^",
+    "@fmcoldays/modal": "workspace:^",
     "@fmcoldays/notify": "workspace:^",
-    "@fmcoldays/shared": "workspace:^",
-    "@fmcoldays/ajax-ext": "workspace:^"
+    "@fmcoldays/post-action": "workspace:^",
+    "@fmcoldays/shared": "workspace:^"
   },
   "devDependencies": {
     "tsup": "^8.3.0",
