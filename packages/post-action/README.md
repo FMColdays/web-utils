@@ -58,6 +58,52 @@ Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<div>`…) mediant
 | `data-action-confirm-title` | `string` | `"¿Estás seguro?"` | Título del diálogo. |
 | `data-action-confirm-description` | `string` | `"Esta acción no se puede deshacer."` | Mensaje del diálogo. |
 
+### Submit automático (`data-action-submit`)
+
+Dispara `requestSubmit()` en un form cuando el elemento cambia o recibe input. Útil para filtros que se envían solos sin botón.
+
+| Atributo | Tipo | Default | Descripción |
+|---|---|---|---|
+| `data-action-submit` | `string` (selector) o vacío | — | Selector del form a enviar. Si está vacío usa el form padre. |
+| `data-action-submit-delay` | `number` (ms) | `400` para texto, `0` para el resto | Debounce antes de disparar el submit. Aplica a cualquier tipo de elemento. |
+
+```html
+<!-- Select dentro del form: dispara submit al cambiar -->
+<select name="estado" data-action-submit>…</select>
+
+<!-- Input de texto fuera del form: debounce 400ms por defecto -->
+<input name="buscar" data-action-submit="#mi-form" />
+
+<!-- Select fuera del form con delay personalizado -->
+<select name="pagSize" data-action-submit="#mi-form" data-action-submit-delay="300">…</select>
+```
+
+> Para inputs con `min`/`max`, el valor se clampea automáticamente antes de enviar y mientras el usuario escribe.
+
+### Clonar valor en un form (`data-action-bind`)
+
+Crea un `<input type="hidden">` dentro del form con el valor del elemento original. Se mantiene sincronizado en tiempo real. Útil cuando el control está fuera del `<form>`.
+
+| Atributo | Tipo | Default | Descripción |
+|---|---|---|---|
+| `data-action-bind` | `string` (selector) | — | Selector del form donde se inyecta el clon. |
+| `data-action-bind-visible` | `"true"` | — | Hace visible el clon (útil para debug). |
+
+```html
+<!-- Select fuera del form: su valor viaja al form como hidden input -->
+<select name="pageSize"
+        data-action-bind="#filter-form"
+        data-action-submit="#filter-form">…</select>
+
+<!-- Input de texto fuera del form -->
+<input name="pageNumber" type="text"
+       min="1" max="@pgTotal"
+       data-action-bind="#filter-form"
+       data-action-submit="#filter-form" />
+```
+
+> Si el form es reemplazado por AJAX (`data-action-target`), el clon se recrea automáticamente.
+
 ### Loading
 
 | Atributo | Tipo | Default | Descripción |
@@ -233,9 +279,11 @@ return Json(new { success = false, message = "El correo ya existe." });
 
 | Export | Descripción |
 |---|---|
-| `registerPostAction(root?)` | Registra los listeners de click y submit. Devuelve una función para desregistrar. |
+| `registerPostAction(root?)` | Registra los listeners de click, submit, change e input. Devuelve una función para desregistrar. |
 | `handlePostActionClick(e)` | Handler de click crudo. |
 | `handlePostActionSubmit(e)` | Handler de submit crudo. |
+| `handleActionSubmitTrigger(e)` | Handler de `data-action-submit` (change/input). |
+| `bindElements(root?)` | Procesa `data-action-bind` en el root dado. Idempotente. |
 | `executeRequest(opts)` | Ejecuta la petición HTTP a partir de un `ActionOptions`. |
 | `parseOptions(el)` | Lee los `data-action-*` de un elemento a `ActionOptions`. |
 | Tipos | `ActionOptions`, `ActionResult`. |
@@ -244,11 +292,13 @@ return Json(new { success = false, message = "El correo ya existe." });
 
 ```
 src/
-├── index.ts                     # barril + auto-registro
-├── register.ts                  # listeners (click + submit, event delegation)
-├── handle-post-action-click.ts  # orquestador para elementos clickeables
-├── handle-post-action-submit.ts # orquestador para forms
-├── types/                       # ActionOptions, ActionResult
-├── helpers/                     # options, dom, notify, download, server-message
-└── services/                    # request.service (fetch + shared.buildHttpPayload)
+├── index.ts                        # barril + auto-registro
+├── register.ts                     # listeners (click, submit, change, input, post-action:updated)
+├── handle-post-action-click.ts     # orquestador para elementos clickeables
+├── handle-post-action-submit.ts    # orquestador para forms
+├── handle-action-submit-trigger.ts # data-action-submit (debounce, clamp min/max)
+├── bind-elements.ts                # data-action-bind (clon hidden + re-bind tras AJAX)
+├── types/                          # ActionOptions, ActionResult
+├── helpers/                        # options, dom, notify, download, server-message
+└── services/                       # request.service (fetch + shared.buildHttpPayload)
 ```
