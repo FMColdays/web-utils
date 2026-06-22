@@ -218,6 +218,26 @@ Si jQuery no está presente, la validación nativa del browser aplica.
 
 ---
 
+## Evento `modal:ready`
+
+El paquete dispara `modal:ready` en `document` cada vez que el modal termina de renderizar. Úsalo para inicializar plugins que dependen del DOM (select2, flatpickr, etc.):
+
+```ts
+import type { ModalReadyEvent } from '@fmcoldays/modal'
+
+document.addEventListener('modal:ready', (e) => {
+  const { container } = (e as ModalReadyEvent).detail
+  // container es el HTMLElement del cuerpo del modal
+  $(container).find('select').select2({
+    dropdownParent: $(container).closest('dialog'),
+  })
+})
+```
+
+El tipo `ModalReadyEvent` también está disponible desde `@fmcoldays/all`.
+
+---
+
 ## API programática
 
 | Export | Descripción |
@@ -226,7 +246,7 @@ Si jQuery no está presente, la validación nativa del browser aplica.
 | `openModal(url, opts?)` | Abre el modal de forma programática. |
 | `configureModal(partial)` | Configura selectores, loading y hooks. |
 | `buildFetchOptions(url, opts)` | Traduce `ModalOptions` a `{ url, init: RequestInit }`. |
-| Tipos | `ModalOptions`. |
+| Tipos | `ModalOptions`, `ModalReadyEvent`. |
 
 ## Estructura
 

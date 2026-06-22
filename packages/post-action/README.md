@@ -250,20 +250,77 @@ Crea un `<input type="hidden">` dentro del form con el valor del elemento origin
 
 ## Respuesta JSON esperada del backend
 
+El flujo de éxito o error se determina en este orden:
+
+1. **HTTP status** — 4xx/5xx siempre es error.
+2. **Campo `success` booleano** (cualquier capitalización) — `true` = éxito, `false` = error.
+3. **`successRules` / `errorRules`** configuradas globalmente — primera que aplique gana.
+4. Sin ninguno de los anteriores — se confía en el HTTP status.
+
+El único campo de mensaje reconocido es `message` (en cualquier capitalización: `message`, `Message`, `MESSAGE`…).
+
 ```json
+{ "message": "Guardado correctamente." }
 { "success": true,  "message": "Guardado correctamente." }
 { "success": false, "message": "El correo ya existe." }
 ```
 
-- `success: false` activa el flujo de error aunque HTTP sea 200.
-- Si no viene `message`, usa el valor del atributo HTML.
-
 En ASP.NET MVC:
 
 ```csharp
+// Éxito HTTP
+return Ok(new { message = "Guardado correctamente." });
+
+// Error HTTP
+return BadRequest(new { message = "El correo ya existe." });
+
+// Éxito/error en el body (HTTP 200 siempre)
 return Json(new { success = true,  message = "Guardado correctamente." });
 return Json(new { success = false, message = "El correo ya existe." });
 ```
+
+### Configuración global de reglas
+
+Si tu backend usa una convención propia (ej. `id == 200` como éxito), configúralo una vez al arrancar la app:
+
+```ts
+import { PostAction, fieldEquals, fieldNotEquals } from '@fmcoldays/post-action'
+
+PostAction.configure({
+  successRules: [fieldEquals('id', 200)],
+  errorRules:   [fieldNotEquals('id', 200)],
+})
+```
+
+Con `@fmcoldays/all`:
+
+```ts
+import { configure, fieldEquals, fieldNotEquals } from '@fmcoldays/all'
+
+configure({
+  postAction: {
+    successRules: [fieldEquals('id', 200)],
+    errorRules:   [fieldNotEquals('id', 200)],
+  },
+})
+```
+
+| Helper | Descripción |
+|---|---|
+| `fieldEquals(field, value)` | Éxito/error si `data[field] === value`. |
+| `fieldNotEquals(field, value)` | Éxito/error si `data[field] !== value`. |
+
+También puedes pasar funciones custom:
+
+```ts
+PostAction.configure({
+  successRules: [
+    (data) => 'code' in data ? data.code === 1 : undefined
+  ],
+})
+```
+
+Cada función devuelve `true`, `false`, o `undefined` (no aplica, pasa a la siguiente regla).
 
 ---
 
@@ -286,7 +343,10 @@ return Json(new { success = false, message = "El correo ya existe." });
 | `bindElements(root?)` | Procesa `data-action-bind` en el root dado. Idempotente. |
 | `executeRequest(opts)` | Ejecuta la petición HTTP a partir de un `ActionOptions`. |
 | `parseOptions(el)` | Lee los `data-action-*` de un elemento a `ActionOptions`. |
-| Tipos | `ActionOptions`, `ActionResult`. |
+| `PostAction.configure(opts)` | Configura reglas globales de éxito/error. |
+| `fieldEquals(field, value)` | Helper — regla que evalúa `data[field] === value`. |
+| `fieldNotEquals(field, value)` | Helper — regla que evalúa `data[field] !== value`. |
+| Tipos | `ActionOptions`, `ActionResult`, `PostActionConfig`, `SuccessRule`, `ErrorRule`. |
 
 ## Estructura
 
