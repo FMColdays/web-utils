@@ -1,6 +1,6 @@
 {
   "name": "@fmcoldays/all",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "Meta-paquete: instala y registra todos los paquetes @fmcoldays de una vez.",
   "author": "fmcoldays",
   "license": "MIT",
