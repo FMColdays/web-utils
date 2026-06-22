@@ -15,6 +15,7 @@ import { registerPostAction } from '@/register'
 export * from '@/types'
 export * from '@/helpers'
 export * from '@/services'
+export * from '@/config'
 export { handlePostActionClick } from '@/handle-post-action-click'
 export { registerPostAction }
 

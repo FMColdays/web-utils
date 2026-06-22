@@ -78,6 +78,7 @@ export function openModal(url: string, opts: ModalOptions = {}): void {
       initStepForm(container)
       initFooterSubmit(container)
       modal.showModal()
+      document.dispatchEvent(new CustomEvent('modal:ready', { detail: { container } }))
     })
     .catch(() => {
       finishLoading()

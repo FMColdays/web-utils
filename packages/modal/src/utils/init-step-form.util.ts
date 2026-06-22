@@ -63,7 +63,8 @@ export const initStepForm = (container: HTMLElement): void => {
             `[data-step="${currentStep}"] input[name], [data-step="${currentStep}"] select[name], [data-step="${currentStep}"] textarea[name]`
           )
         )
-        if (fields.some((el) => !validator.element(el))) return
+        const results = fields.map((el) => validator.element(el))
+        if (results.some((v) => !v)) return
       }
     }
     if (currentStep < totalSteps) showStep(currentStep + 1)

@@ -1,6 +1,6 @@
 import { buildHttpPayload } from '@fmcoldays/shared'
 import type { ActionOptions, ActionResult } from '@/types'
-import { triggerDownload, parseServerMessage } from '@/helpers'
+import { triggerDownload, parseServerMessage, parseSuccessFlag } from '@/helpers'
 
 /**
  * Ejecuta la petición HTTP de un `post-action`. Delega el armado de URL,
@@ -37,6 +37,13 @@ export async function executeRequest(opts: ActionOptions): Promise<ActionResult>
   if (!res.ok) {
     const serverMsg = await parseServerMessage(res)
     throw Object.assign(new Error(`HTTP ${res.status}`), { serverMsg })
+  }
+
+  // HTTP 2xx pero success: false en el body → tratar como error
+  const successFlag = await parseSuccessFlag(res)
+  if (successFlag === false) {
+    const serverMsg = await parseServerMessage(res)
+    throw Object.assign(new Error('success: false'), { serverMsg })
   }
 
   if (opts.download) {
