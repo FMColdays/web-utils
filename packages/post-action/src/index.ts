@@ -17,6 +17,7 @@ export * from '@/helpers'
 export * from '@/services'
 export * from '@/config'
 export { handlePostActionClick } from '@/handle-post-action-click'
+export { handlePostActionSelectChange } from '@/handle-post-action-select-change'
 export { registerPostAction }
 
 // Auto-registro al importar el paquete: `import '@fmcoldays/post-action'`.

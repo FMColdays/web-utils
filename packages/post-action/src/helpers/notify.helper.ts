@@ -14,7 +14,7 @@ export function askConfirmation(opts: ActionOptions): Promise<boolean> {
 
 /** Notifica éxito salvo que `silent` esté activo. Prefiere el mensaje del servidor. */
 export async function notifySuccess(opts: ActionOptions, serverMsg?: string): Promise<void> {
-  if (opts.silent) return
+  if (opts.silent === true) return
   await popup({ type: 'success', title: 'Éxito', message: serverMsg ?? opts.successMsg })
 }
 

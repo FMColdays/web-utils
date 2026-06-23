@@ -11,8 +11,10 @@ export function parseOptions(trigger: HTMLElement, fallback?: { url?: string; me
   return {
     url,
     method: trigger.dataset.actionMethod ?? fallback?.method ?? 'POST',
-    silent: trigger.dataset.actionSilent === 'true' ||
-      (trigger.dataset.actionSilent !== 'false' && trigger.dataset.actionDownload === 'true'),
+    silent: trigger.dataset.actionSilent === 'true' ? true
+      : trigger.dataset.actionSilent === 'false' ? false
+      : trigger.dataset.actionDownload === 'true' ? true
+      : undefined,
     reloadOnSuccess: trigger.dataset.actionReload === 'true',
     redirect: trigger.dataset.actionRedirect,
     successMsg: trigger.dataset.actionSuccessMsg ?? 'La operación se completó exitosamente.',

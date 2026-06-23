@@ -25,7 +25,7 @@ const unregister = registerPostAction()
 // unregister() para quitar el listener
 ```
 
-Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<div>`…) mediante event delegation.
+Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<select>`, `<div>`…) mediante event delegation.
 
 ---
 
@@ -57,6 +57,31 @@ Funciona en cualquier elemento (`<button>`, `<a>`, `<form>`, `<div>`…) mediant
 | `data-action-confirm` | `"true"` | — | Muestra diálogo de confirmación antes de ejecutar. |
 | `data-action-confirm-title` | `string` | `"¿Estás seguro?"` | Título del diálogo. |
 | `data-action-confirm-description` | `string` | `"Esta acción no se puede deshacer."` | Mensaje del diálogo. |
+
+### Select autónomo (`select[data-action="true"]`)
+
+Un `<select>` con `data-action="true"` y `data-action-url` ejecuta una petición GET cada vez que su valor cambia, añadiendo automáticamente `name=value` a la URL. No necesita estar dentro de un `<form>`.
+
+| Atributo | Default | Notas |
+|---|---|---|
+| `data-action-method` | `"GET"` | Diferente al default `POST` de otros elementos. |
+| `data-action-dismiss` | `false` | Nunca cierra el modal padre, salvo que se ponga explícitamente. |
+
+```html
+<!-- Al cambiar empresa → GET /ComandoSensor/VehiculosOptions?id_empresa=5 → llena #sel-vehiculo -->
+<select name="id_empresa"
+        data-action="true"
+        data-action-url="/ComandoSensor/VehiculosOptions"
+        data-action-target="#sel-vehiculo"
+        data-action-silent="true">
+  <option value="1">Empresa A</option>
+  <option value="2">Empresa B</option>
+</select>
+```
+
+> **Select2:** si el `<select>` está inicializado con Select2, el bridge jQuery (`select2:select` / `select2:unselect`) actúa automáticamente cuando jQuery está disponible en `window.$`. No requiere configuración adicional ni jQuery como dependencia del paquete.
+
+---
 
 ### Submit automático (`data-action-submit`)
 
@@ -118,7 +143,7 @@ Crea un `<input type="hidden">` dentro del form con el valor del elemento origin
 | `data-action-target` | `string` (selector) | — | Selector del elemento donde se inyecta la respuesta HTML. |
 | `data-action-target-prop` | `"html" \| "text" \| "value"` | `"html"` | Propiedad del target a actualizar. |
 | `data-action-download` | `"true"` | — | Trata la respuesta como archivo descargable. El nombre se toma del header `Content-Disposition`. Silencioso por defecto. |
-| `data-action-silent` | `"true"` | — | Suprime la notificación de **éxito**. Los errores se muestran siempre. |
+| `data-action-silent` | `"true"` \| `"false"` | — | `"true"` suprime la notificación de éxito. `"false"` la fuerza aunque haya `data-action-target`. Sin poner: notifica solo si no hay target. Los errores se muestran siempre. |
 | `data-action-success-msg` | `string` | `"La operación se completó exitosamente."` | Mensaje de éxito. |
 | `data-action-error-msg` | `string` | `"Ocurrió un error al realizar la operación."` | Mensaje de error. |
 
@@ -339,6 +364,7 @@ Cada función devuelve `true`, `false`, o `undefined` (no aplica, pasa a la sigu
 | `registerPostAction(root?)` | Registra los listeners de click, submit, change e input. Devuelve una función para desregistrar. |
 | `handlePostActionClick(e)` | Handler de click crudo. |
 | `handlePostActionSubmit(e)` | Handler de submit crudo. |
+| `handlePostActionSelectChange(select)` | Handler de change para `select[data-action="true"]`. Usado internamente; útil si integras tu propio bridge de eventos. |
 | `handleActionSubmitTrigger(e)` | Handler de `data-action-submit` (change/input). |
 | `bindElements(root?)` | Procesa `data-action-bind` en el root dado. Idempotente. |
 | `executeRequest(opts)` | Ejecuta la petición HTTP a partir de un `ActionOptions`. |
@@ -354,9 +380,10 @@ Cada función devuelve `true`, `false`, o `undefined` (no aplica, pasa a la sigu
 src/
 ├── index.ts                        # barril + auto-registro
 ├── register.ts                     # listeners (click, submit, change, input, post-action:updated)
-├── handle-post-action-click.ts     # orquestador para elementos clickeables
-├── handle-post-action-submit.ts    # orquestador para forms
-├── handle-action-submit-trigger.ts # data-action-submit (debounce, clamp min/max)
+├── handle-post-action-click.ts        # orquestador para elementos clickeables
+├── handle-post-action-submit.ts       # orquestador para forms
+├── handle-post-action-select-change.ts # orquestador para select[data-action="true"] + bridge Select2
+├── handle-action-submit-trigger.ts    # data-action-submit (debounce, clamp min/max)
 ├── bind-elements.ts                # data-action-bind (clon hidden + re-bind tras AJAX)
 ├── types/                          # ActionOptions, ActionResult
 ├── helpers/                        # options, dom, notify, download, server-message

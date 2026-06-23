@@ -1,41 +1,34 @@
 import {
   parseOptions,
-  findSubmitButton,
   applyLoadingState,
   removeLoadingState,
   updateTarget,
   dismissDialog,
-  askConfirmation,
   notifySuccess,
   notifyError,
   injectSkeleton,
 } from '@/helpers'
 import { executeRequest } from '@/services'
 
-export async function handlePostActionSubmit(e: Event): Promise<void> {
-  const form = (e.target as HTMLElement).closest<HTMLFormElement>('form[data-action="true"]')
-  if (!form) return
-
-  e.preventDefault()
-
-  const opts = parseOptions(form, {
-    url:    form.hasAttribute('action') ? form.action : undefined,
-    method: form.method.toUpperCase(), // form.method siempre devuelve 'get' o 'post' (default 'get')
-  })
+/**
+ * Handler para `select[data-action="true"]`.
+ * Cuando el select cambia, arma la URL con `name=value` y ejecuta la petición.
+ * Compatible con Select2: puede llamarse desde el bridge de jQuery o desde el
+ * listener nativo de `change`.
+ */
+export async function handlePostActionSelectChange(select: HTMLSelectElement): Promise<void> {
+  const opts = parseOptions(select, { method: 'GET' })
   if (!opts) return
 
-  // Si no hay body explícito, usar los campos del form
-  if (!opts.bodyJson && !opts.bodyForm && !opts.pick) {
-    opts.formData = new FormData(form)
+  // Un select que cambia nunca debe cerrar el modal a menos que se indique explícitamente
+  opts.dismiss ??= false
+
+  if (select.name) {
+    const sep = opts.url.includes('?') ? '&' : '?'
+    opts.url = `${opts.url}${sep}${encodeURIComponent(select.name)}=${encodeURIComponent(select.value)}`
   }
 
-  if (opts.confirm) {
-    const confirmed = await askConfirmation(opts)
-    if (!confirmed) return
-  }
-
-  const submitBtn = findSubmitButton(form)
-  applyLoadingState(submitBtn ?? form, null, opts)
+  applyLoadingState(select, null, opts)
   injectSkeleton(opts)
 
   try {
@@ -43,7 +36,7 @@ export async function handlePostActionSubmit(e: Event): Promise<void> {
 
     if (response) await updateTarget(response, opts)
 
-    dismissDialog(form, opts.dismiss)
+    dismissDialog(select, opts.dismiss)
 
     if (opts.silent !== true && (opts.silent === false || !opts.targetSel)) await notifySuccess(opts, serverMsg)
 
@@ -59,6 +52,6 @@ export async function handlePostActionSubmit(e: Event): Promise<void> {
     const serverMsg = (err as { serverMsg?: string })?.serverMsg
     notifyError(opts, serverMsg)
   } finally {
-    removeLoadingState(submitBtn ?? form, null, opts)
+    removeLoadingState(select, null, opts)
   }
 }

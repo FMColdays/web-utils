@@ -22,6 +22,7 @@ export async function handlePostActionClick(e: MouseEvent): Promise<void> {
   const trigger = target.closest<HTMLElement>('[data-action="true"]')
   if (!trigger) return
   if (trigger instanceof HTMLFormElement) return // forms handled by submit listener
+  if (trigger instanceof HTMLSelectElement) return // selects handled by change listener
 
   e.preventDefault()
 
@@ -51,7 +52,7 @@ export async function handlePostActionClick(e: MouseEvent): Promise<void> {
 
     dismissDialog(trigger, opts.dismiss)
 
-    if (!opts.silent && !opts.targetSel) await notifySuccess(opts, serverMsg)
+    if (opts.silent !== true && (opts.silent === false || !opts.targetSel)) await notifySuccess(opts, serverMsg)
 
     if (opts.thenSel) {
       const thenEl = document.querySelector<HTMLElement>(opts.thenSel)

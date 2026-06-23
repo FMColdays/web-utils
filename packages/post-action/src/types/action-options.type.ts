@@ -2,7 +2,7 @@
 export interface ActionOptions {
   url: string
   method: string
-  silent: boolean
+  silent: boolean | undefined
   reloadOnSuccess: boolean
   redirect?: string
   successMsg: string
